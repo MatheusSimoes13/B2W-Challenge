@@ -10,7 +10,7 @@ const Header = () => {
         <span className="flex items-center gap-2">following 1 user <IoIosArrowDown /></span>
       </div>
       <div>
-        <p className="pt-5 pb-14 text-2xl">Find new users like you</p>
+        <p className="pt-5 pb-20 text-2xl">Find new users like you</p>
       </div>
     </div>
   )
