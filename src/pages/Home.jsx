@@ -12,7 +12,6 @@ const Home = () => {
   useEffect(() => {
     api_client.get('https://randomuser.me/api/')
       .then(res => {
-        console.log(res)
         setUser(res.data.results[0])
       })
       .catch(err => {
@@ -33,8 +32,8 @@ const Home = () => {
 
   return (
     <main>
-      <Header />
-      <div className={`mx-5 bg-white md:mx-0 md:w-4/5 bg-${user.picture.large}`}>
+      <Header/>
+      <div className={`mx-5 bg-white md:mx-0 md:w-4/5`}>
         <div className="pb-5 shadow-md p-0.5 -mt-12 px-6">
           {user &&
             <div className={`mt-4`}>
