@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <main>
       <Header/>
-      <div className={`mx-5 bg-white md:mx-0 md:w-4/5`}>
+      <div className={`mx-5 bg-white md:mx-0 md:w-4/5 md:inline`}>
         <div className="pb-5 shadow-md p-0.5 -mt-12 px-6">
           {user &&
             <div className={`mt-4`}>
