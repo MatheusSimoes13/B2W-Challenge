@@ -7,7 +7,7 @@ const Header = ({
 
   return (
     <div className="bg-[#b000f2] text-white">
-      <div className="flex justify-between py-3 px-6 shadow-md">
+      <div className="flex justify-between py-3 px-6 md:px-20 shadow-md">
         <span>users_like.me</span>
         <Dropdown />
       </div>

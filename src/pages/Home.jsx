@@ -18,7 +18,6 @@ const Home = () => {
 
   useEffect(() => {
     apiReq()
-
   }, [])
 
   const apiReq = () => {
@@ -50,16 +49,18 @@ const Home = () => {
     <main>
       <Header />
       <section className="">
-        <div className={`mx-5 bg-white md:mx-0 md:mx-20`}>
+        <div className={`mx-5 bg-white md:mx-0 md:mx-20 xl:mx-60`}>
           <div className="pb-5 shadow-md p-0.5 -mt-12 px-6">
             {user &&
               <div className={`mt-4`}>
                 <img className="rounded-full inline" src={user.picture.large} alt="userImg" />
-                <div className="flex flex-col md:grid md:grid-cols-3 items-center md:gap-10">
-                  <div className="col-start-2">
+                <div className="flex flex-col md:grid md:grid-cols-3 items-center">
+                  <div className="col-start-2 md:flex md:justify-center">
                     <FollowButton />
                   </div>
-                  <NextButton onClick={() => handleNext()} />
+                  <div className="md:flex md:justify-end">
+                    <NextButton onClick={() => handleNext()} />
+                  </div>
                 </div>
                 <p className="text-xl py-1">{user.name.first}  {user.name.last}</p>
                 <p className="text-sm py-1"><strong>{user.location.city},  {user.location.country}</strong></p>
@@ -72,15 +73,17 @@ const Home = () => {
             {user && <Card info={'contact info'} field1={'email'} answer1={user.email} field2={'phone 1'} answer2={user.phone} />}
           </div>
           <h1 className="my-2 md:text-start md:font-bold md:text-xl">Suggestion 4you</h1>
-
         </div>
       </section>
-      <div className="flex gap-3 justify-center my-4 md:mx-20">
+      <div className="flex gap-3 justify-center my-4 md:mx-20 xl:mx-60">
         <Swiper
           slidesPerView={2}
           breakpoints={{
             700: {
               slidesPerView: 3
+            },
+            1270: {
+              slidesPerView: 5
             }
           }}
           spaceBetween={12}
