@@ -7,12 +7,12 @@ import FollowButton from '../Buttons/FollowButton'
 const Dropdown = () => {
 
   const [isOpen, setIsOpen] = useState()
-  const [user, setUser] = useState(null)
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
-    api_client.get('https://randomuser.me/api/')
+    api_client.get('/?results=4')
       .then(res => {
-        setUser(res.data.results[0])
+        setUsers(res.data.results)
       })
       .catch(err => {
         console.log(err)
@@ -26,45 +26,22 @@ const Dropdown = () => {
         <span className="justify-end text-black font-bold text-sm flex items-center gap-2 text-[#A020F0] cursor-pointer">following 5 users <GrFormClose className="text-2xl" onClick={() => setIsOpen(false)} /></span>
         <hr />
         <ul className="bg-white flex flex-col gap-4 p-2 ">
-          <li className="flex items-center gap-3 pt-2 justify-between">
-            <div className="flex items-center gap-3">
-              {user && <img className="rounded-full" src={user.picture.thumbnail} alt="userImg" />}
-              {user &&
-                <div className="item-center justify-start text-start">
-                  <p className="text-black text-sm">{user.name.first} {user.name.last}</p>
-                  <p className="text-black text-xs">{user.location.city}, {user.location.country}</p>
-                </div>
-              }
-            </div>
-            <FollowButton following={true} />
-          </li>
-          <li className="flex items-center gap-3 pt-2 justify-between">
-            <div className="flex items-center gap-3">
-              {user && <img className="rounded-full" src={user.picture.thumbnail} alt="userImg" />}
-              {user &&
-                <div className="item-center justify-start text-start">
-                  <p className="text-black text-sm">{user.name.first} {user.name.last}</p>
-                  <p className="text-black text-xs">{user.location.city}, {user.location.country}</p>
-                </div>
-              }
-            </div>
-            <FollowButton following={true} />
-          </li>
-          <li className="flex items-center gap-3 pt-2 justify-between">
-            <div className="flex items-center gap-3">
-              {user && <img className="rounded-full" src={user.picture.thumbnail} alt="userImg" />}
-              {user &&
-                <div className="item-center justify-start text-start">
-                  <p className="text-black text-sm">{user.name.first} {user.name.last}</p>
-                  <p className="text-black text-xs">{user.location.city}, {user.location.country}</p>
-                </div>
-              }
-            </div>
-            <FollowButton following={true} />
-          </li>
+          {users.map(user => (
+            <li className="flex items-center gap-3 pt-2 justify-between">
+              <div className="flex items-center gap-3">
+                {user && <img className="rounded-full" src={user.picture.thumbnail} alt="userImg" />}
+                {user &&
+                  <div className="item-center justify-start text-start">
+                    <p className="text-black text-sm">{user.name.first} {user.name.last}</p>
+                    <p className="text-black text-xs">{user.location.city}, {user.location.country}</p>
+                  </div>
+                }
+              </div>
+              <FollowButton following={true} />
+            </li>
+          ))}
         </ul>
       </div>
-
     </div>
   )
 

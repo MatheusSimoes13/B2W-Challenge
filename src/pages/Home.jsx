@@ -22,9 +22,8 @@ const Home = () => {
   }, [])
 
   const apiReq = () => {
-    api_client.get('https://randomuser.me/api/')
+    api_client.get('')
       .then(res => {
-        console.log(res)
         setUser(res.data.results[0])
       })
       .catch(err => {
@@ -56,9 +55,9 @@ const Home = () => {
             {user &&
               <div className={`mt-4`}>
                 <img className="rounded-full inline" src={user.picture.large} alt="userImg" />
-                <div className="flex flex-col md:grid md:grid-cols-3 items-center md:gap-14">
+                <div className="flex flex-col md:grid md:grid-cols-3 items-center md:gap-10">
                   <div className="col-start-2">
-                  <FollowButton />
+                    <FollowButton />
                   </div>
                   <NextButton onClick={() => handleNext()} />
                 </div>
@@ -67,12 +66,15 @@ const Home = () => {
               </div>
             }
           </div>
-          {user && <Card info={'Personal info'} field1={'born at'} answer1={user.nat}
-            field2={'age'} answer2={`${user.dob.age} years old`} />}
-          {user && <Card info={'contact info'} field1={'email'} answer1={user.email} field2={'phone 1'} answer2={user.phone} />}
+          <div className="md:flex md:w-full md:gap-2">
+            {user && <Card info={'Personal info'} field1={'born at'} answer1={user.nat}
+              field2={'age'} answer2={`${user.dob.age} years old`} />}
+            {user && <Card info={'contact info'} field1={'email'} answer1={user.email} field2={'phone 1'} answer2={user.phone} />}
+          </div>
           <h1 className="my-2 md:text-start md:font-bold md:text-xl">Suggestion 4you</h1>
+
         </div>
-        </section>
+      </section>
       <div className="flex gap-3 justify-center my-4 md:mx-20">
         <Swiper
           slidesPerView={2}
@@ -93,7 +95,6 @@ const Home = () => {
                 lastName={user.name.last} city={user.location.city} country={user.location.country}
               />
             </SwiperSlide>
-
           ))}
         </Swiper>
       </div>

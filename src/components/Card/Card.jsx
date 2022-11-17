@@ -11,7 +11,7 @@ const Card = ({
 
   return (
 
-    <div className="bg-white shadow-md w-full md:w-1/2 inline-block my-2">
+    <div className="bg-white shadow-md w-full md:w-1/2 inline-block my-2 border-2">
       <div className="p-6 flex flex-col gap-3">
         <p className="justify-start text-start"><strong>{info}</strong></p>
         <p className="text-sm flex text-start">{field1}: {answer1}</p>

@@ -5,8 +5,8 @@ const NextButton = ({
 }) => {
 
   return(
-    <div className="py-1 border-2 rounded-sm cursor-pointer px-7" onClick={onClick}>
-      <p className="text-sm">try the next one</p>
+    <div className="py-2 border-2 rounded-sm cursor-pointer px-7" onClick={onClick}>
+      <p className="text-xs">try the next one</p>
     </div>
   )
 
