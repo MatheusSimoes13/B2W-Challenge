@@ -4,19 +4,21 @@ import NextButton from "../components/Buttons/nextButton";
 import Card from "../components/Card/Card";
 import Header from "../components/Header/Header";
 import api_client from "../config/api_client";
+import SuggestionCard from "../components/SuggestionCard/SuggestionCard"
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import "swiper/css/pagination";
+
+import { Pagination } from "swiper";
 
 const Home = () => {
 
   const [user, setUser] = useState(null)
+  const [localUsers, setLocalUsers] = useState([])
 
   useEffect(() => {
-    api_client.get('https://randomuser.me/api/')
-      .then(res => {
-        setUser(res.data.results[0])
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    apiReq()
+
   }, [])
 
   const apiReq = () => {
@@ -30,9 +32,23 @@ const Home = () => {
       })
   }
 
+  const handleNext = () => {
+    if (localUsers.length > 4) {
+      let array = localUsers
+      array.shift()
+      array.push(user)
+      setLocalUsers(array)
+    }
+    else {
+      setLocalUsers([...localUsers, user])
+    }
+    localStorage.setItem('users', JSON.stringify(localUsers))
+    apiReq()
+  }
+
   return (
     <main>
-      <Header/>
+      <Header />
       <div className={`mx-5 bg-white md:mx-0 md:w-4/5 md:inline`}>
         <div className="pb-5 shadow-md p-0.5 -mt-12 px-6">
           {user &&
@@ -40,8 +56,8 @@ const Home = () => {
               <img className="rounded-full inline" src={user.picture.large} alt="userImg" />
               <div className="flex flex-col items-center">
                 <FollowButton />
-                <NextButton onClick={() => apiReq()} />
-              </div> 
+                <NextButton onClick={() => handleNext()} />
+              </div>
               <p className="text-xl py-1">{user.name.first}  {user.name.last}</p>
               <p className="text-sm py-1"><strong>{user.location.city},  {user.location.country}</strong></p>
             </div>
@@ -50,6 +66,27 @@ const Home = () => {
         {user && <Card info={'Personal info'} field1={'born at'} answer1={user.nat}
           field2={'age'} answer2={`${user.dob.age} years old`} />}
         {user && <Card info={'contact info'} field1={'email'} answer1={user.email} field2={'phone 1'} answer2={user.phone} />}
+      </div>
+      <h1 className="my-2">Suggestion 4you</h1>
+      <div className="flex gap-3 justify-center my-4">
+        <Swiper
+          slidesPerView={2}
+          spaceBetween={12}
+          centeredSlides={true}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[Pagination]}
+        >
+          {localUsers.map(user => (
+            <SwiperSlide>
+              <SuggestionCard picture={user.picture.thumbnail} firstName={user.name.first}
+                lastName={user.name.last} city={user.location.city} country={user.location.country}
+              />
+            </SwiperSlide>
+
+          ))}
+        </Swiper>
       </div>
     </main>
   )
