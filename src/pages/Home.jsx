@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/pagination";
 import { FollowingContext } from "../contexts/following";
+import initImage from '../assets/eu.jpeg'
 
 import { Pagination } from "swiper";
 
@@ -16,11 +17,27 @@ const Home = () => {
 
   const { following, setFollowing } = useContext(FollowingContext)
 
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({
+      "picture":{
+        "large": initImage,
+        "medium": initImage,
+        "thumbnail": initImage
+      },
+      "name":{
+        "first":"Matheus",
+        "last":"Simões"
+      },
+      "location":{
+        "city":"Santos",
+        "country":"Brazil"
+      },
+      "dob":{
+        "age":"22"
+      }
+  })
   const [localUsers, setLocalUsers] = useState([])
 
   useEffect(() => {
-    apiReq()
     // Checa se está nulo para evitar erros, se tiver nulo seta o array para vazio
     JSON.parse(localStorage.getItem('users')) 
       ? setLocalUsers(JSON.parse(localStorage.getItem('users')))
