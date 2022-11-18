@@ -77,6 +77,7 @@ const Home = () => {
     followingUsers.push(user)
     setFollowing(followingUsers)
     localStorage.setItem('following', JSON.stringify(following))
+    apiReq()
   }
 
   return (
