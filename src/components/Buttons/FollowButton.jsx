@@ -1,11 +1,12 @@
 import React from "react";
 
 const FollowButton = ({
-  following
+  following,
+  onClick
 }) => {
 
   return (
-    <div className={`${following ? 'px-3 text-sm cursor-pointer' : 'rounded-sm py-1 my-2 cursor-pointer'} `} >
+    <div className={`${following ? 'px-3 text-sm cursor-pointer' : 'rounded-sm py-1 my-2 cursor-pointer'} `} onClick={onClick}>
       <p className={`text-white py-1 rounded-sm w-28 ${following ? 'bg-red-500 px-5' : 'bg-blue-400 px-7'}`}>{following ? 'unfollow' : 'Follow'}</p>
     </div>
   )

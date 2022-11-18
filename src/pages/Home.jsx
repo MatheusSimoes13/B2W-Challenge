@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import FollowButton from "../components/Buttons/FollowButton";
 import NextButton from "../components/Buttons/nextButton";
 import Card from "../components/Card/Card";
@@ -8,16 +8,24 @@ import SuggestionCard from "../components/SuggestionCard/SuggestionCard"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import "swiper/css/pagination";
+import { FollowingContext } from "../contexts/following";
 
 import { Pagination } from "swiper";
 
 const Home = () => {
+
+  const { following, setFollowing } = useContext(FollowingContext)
 
   const [user, setUser] = useState(null)
   const [localUsers, setLocalUsers] = useState([])
 
   useEffect(() => {
     apiReq()
+    // Checa se está nulo para evitar erros, se tiver nulo seta o array para vazio
+    JSON.parse(localStorage.getItem('users')) 
+      ? setLocalUsers(JSON.parse(localStorage.getItem('users')))
+      : setLocalUsers([])
+
   }, [])
 
   const apiReq = () => {
@@ -31,21 +39,30 @@ const Home = () => {
   }
 
   const handleNext = () => {
-    if (localUsers.length > 4) {
+    // se tiver 5 tira o primeiro e coloca um no final
+    if (localUsers?.length > 4) {
       let array = localUsers
       array.shift()
       array.push(user)
       setLocalUsers(array)
     }
     else {
-      setLocalUsers([...localUsers, user])
+      let arrayLocalUsers = localUsers
+      arrayLocalUsers.push(user)
+      setLocalUsers(arrayLocalUsers)
     }
     localStorage.setItem('users', JSON.stringify(localUsers))
     apiReq()
   }
 
-  return (
+  const handleFollow = () => {
+    let followingUsers = following
+    followingUsers.push(user)
+    setFollowing(followingUsers)
+    localStorage.setItem('following', JSON.stringify(following))
+  }
 
+  return (
     <main>
       <Header />
       <section className="">
@@ -56,7 +73,7 @@ const Home = () => {
                 <img className="rounded-full inline" src={user.picture.large} alt="userImg" />
                 <div className="flex flex-col md:grid md:grid-cols-3 items-center">
                   <div className="col-start-2 md:flex md:justify-center">
-                    <FollowButton />
+                    <FollowButton onClick={() => handleFollow()}/>
                   </div>
                   <div className="md:flex md:justify-end">
                     <NextButton onClick={() => handleNext()} />
@@ -92,7 +109,7 @@ const Home = () => {
           }}
           modules={[Pagination]}
         >
-          {localUsers.map(user => (
+          {localUsers?.map(user => (
             <SwiperSlide>
               <SuggestionCard picture={user.picture.thumbnail} firstName={user.name.first}
                 lastName={user.name.last} city={user.location.city} country={user.location.country}

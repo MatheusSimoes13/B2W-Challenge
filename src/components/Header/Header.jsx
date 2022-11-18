@@ -1,9 +1,7 @@
 import React from "react";
 import Dropdown from "../Dropdown/Dropdown";
 
-const Header = ({
-  user
-}) => {
+const Header = () => {
 
   return (
     <div className="bg-[#b000f2] text-white">
